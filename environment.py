@@ -85,7 +85,7 @@ while (True):
                 policy = StackPolicy(obs)
                 start = time.time()
 
-                while (time.time() - start < 7):
+                while (time.time() - start < 8):
                     action = policy.get_action(obs)
                     obs, reward, done, info = env.step(action)
                     env.render()
