@@ -43,14 +43,14 @@ while (True):
                 print("ENDING PROGRAM, THANK YOU FOR INTERACTING!")
                 break
 
-            elif (prev_policy in danger_policies):
-                print("UNALLOWED COMMAND, MAKE SURE POLICY IS SAFE FIRST")
-
             elif (user_input == "reset"):
                 print("RESETTING ENVIRONMENT")
                 obs = env.reset()
                 policy = None
                 prev_policy = None
+
+            elif (prev_policy in danger_policies):
+                print("UNALLOWED COMMAND, MAKE SURE POLICY IS SAFE FIRST")
 
             elif (user_input == "lift green"):
                 print("Starting Lift Green Cube Policy!")
