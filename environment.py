@@ -59,6 +59,7 @@ while (True):
                     action[1] = 0.05
                     obs, reward, done, info = env.step(action)
                     env.render()
+
             elif user_input == "move right":
                 action = np.zeros(7)
                 start = time.time()
@@ -102,16 +103,24 @@ while (True):
 
             elif user_input == "gripper open":
                 action = np.zeros(7)
-                action[6] = -1
-                obs, reward, done, info = env.step(action)
-                env.render()
-
+                start = time.time()
+                while time.time() - start < 1:
+                    action[6] = -1 
+                    obs, reward, done, info = env.step(action)
+                    env.render()
+                # action = np.zeros(7)
+                # action[6] = -1
+                # obs, reward, done, info = env.step(action)
+                # env.render()
 
             elif user_input == "gripper close":
                 action = np.zeros(7)
-                action[6] = 1
-                obs, reward, done, info = env.step(action)
-                env.render()
+                start = time.time()
+                while time.time() - start < 1:
+                    action[6] = 1
+                    obs, reward, done, info = env.step(action)
+                    env.render()
+
 
             elif (user_input == "reset"):
                 print("RESETTING ENVIRONMENT")
@@ -119,8 +128,9 @@ while (True):
                 policy = None
                 prev_policy = None
 
-            elif (prev_policy in danger_policies):
-                print("UNALLOWED COMMAND, MAKE SURE POLICY IS SAFE FIRST")
+
+            # elif (prev_policy in danger_policies):
+            #     print("UNALLOWED COMMAND, MAKE SURE POLICY IS SAFE FIRST")
 
             elif (user_input == "lift green"):
                 print("Starting Lift Green Cube Policy!")
@@ -159,6 +169,7 @@ while (True):
                 print("COMPLETED STACK!")
                 prev_policy = "StackPolicy"
                 policy = None
+
             else:
                 print("UNRECOGNIZED COMMAND, TRY AGAIN!")
 
