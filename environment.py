@@ -5,14 +5,6 @@ import time
 from nlp import process_command
 
 
-'''
-TEAM PLEASE READ THIS:
-So basically, if you try to do like let's say lift green cube while you have a red one in your hand, it'll just reset the whole thing and do the other policy
-or crash (idk what is the reason for this). To avoid this I hard coded a prev_policy so that if it's one of the ones that will crash the program you will
-not be able to run it
-'''
-
-
 #CREATE ENVIRONMENT=======================
 env = suite.make(
     env_name = "Stack",
