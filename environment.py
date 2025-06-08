@@ -24,7 +24,7 @@ prev_policy = None
 move_step = 0.05  
 
 
-def execute_command(command, obs):
+def execute_command(command, obs, magnitude=1.0):
     """Execute the given command and return the new observation."""
     action = np.zeros(7)
     
@@ -35,42 +35,42 @@ def execute_command(command, obs):
     elif command == "move left":
         start = time.time()
         while (time.time() - start < 3):
-            action[1] = 0.05
+            action[1] = move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move right":
         start = time.time()
         while time.time() - start < 3:
-            action[1] = -move_step
+            action[1] = -move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move forward":
         start = time.time()
         while time.time() - start < 3:
-            action[0] = move_step
+            action[0] = move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move back":
         start = time.time()
         while time.time() - start < 3:
-            action[0] = -move_step
+            action[0] = -move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move up":
         start = time.time()
         while time.time() - start < 3:
-            action[2] = move_step
+            action[2] = move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move down":
         start = time.time()
         while time.time() - start < 3:
-            action[2] = -move_step
+            action[2] = -move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
@@ -146,12 +146,12 @@ while (True):
             print("You typed:", user_input)
             
             # Process the command using NLP
-            command = process_command(user_input)
-            
+            command, magnitude = process_command(user_input)
+
             if command is None:
                 print("UNRECOGNIZED COMMAND, TRY AGAIN!")
             else:
-                obs, should_break = execute_command(command, obs)
+                obs, should_break = execute_command(command, obs, magnitude)
                 if should_break:
                     break
                     

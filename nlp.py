@@ -37,31 +37,33 @@ def get_template_embeddings():
     embeddings = model.encode(all_templates)
     return embeddings, all_templates, template_to_command
 
+import re
+
 def process_command(user_input):
     """
-    Process user input and return the corresponding command.
-    Returns None if no matching command is found.
+    Process user input and return a tuple: (command, magnitude)
+    If no matching command or magnitude found, returns (None, None)
     """
     user_input = user_input.lower()
     
-    # Get embeddings for all templates
-    template_embeddings, templates, template_to_command = get_template_embeddings()
+    # Extract magnitude (e.g., "move left 5") — default to 1.0 if not found
+    match = re.search(r"\b(\d+(\.\d+)?)\b", user_input)
+    magnitude = float(match.group(1)) if match else 1.0
     
-    # Get embedding for user input
+    # Get template embeddings
+    template_embeddings, templates, template_to_command = get_template_embeddings()
     user_embedding = get_command_embedding(user_input)
     
-    # Calculate cosine similarity
+    # Cosine similarity
     similarities = np.dot(template_embeddings, user_embedding) / (
         np.linalg.norm(template_embeddings, axis=1) * np.linalg.norm(user_embedding)
     )
     
-    # Get the most similar template
     most_similar_idx = np.argmax(similarities)
     similarity_score = similarities[most_similar_idx]
-    
-    # If similarity is above threshold, return the corresponding command
-    if similarity_score > 0.7:  # Adjust threshold as needed
-        return template_to_command[templates[most_similar_idx]]
-    
-    return None
+
+    if similarity_score > 0.7:
+        return template_to_command[templates[most_similar_idx]], magnitude
+
+    return None, None
 
