@@ -135,6 +135,11 @@ def execute_command(command, obs, magnitude=1.0):
         print("COMPLETED STACK!")
         prev_policy = "StackPolicy"
         policy = None
+
+    if reward:
+        print("Stacking completed or episode terminated!")
+        env.reset()
+        return obs, False
         
     return obs, False
 
