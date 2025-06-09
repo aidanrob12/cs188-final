@@ -46,9 +46,13 @@ def process_command(user_input):
     """
     user_input = user_input.lower()
     
-    # Extract magnitude (e.g., "move left 5") — default to 1.0 if not found
-    match = re.search(r"\b(\d+(\.\d+)?)\b", user_input)
+    # Extract magnitude from anywhere in the string (e.g., "1.2 go left" or "move left 5.5") — default to 1.0 if not found
+    match = re.search(r"\b(\d+(?:\.\d+)?)\b", user_input)
     magnitude = float(match.group(1)) if match else 1.0
+    
+    # Remove the number from the input before processing the command
+    if match:
+        user_input = user_input.replace(match.group(0), "").strip()
     
     # Get template embeddings
     template_embeddings, templates, template_to_command = get_template_embeddings()

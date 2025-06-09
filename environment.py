@@ -12,6 +12,7 @@ env = suite.make(
     has_renderer = True,
     has_offscreen_renderer = False,
     use_camera_obs = False,
+    ignore_done = True,
 )
 
 
@@ -35,14 +36,14 @@ def execute_command(command, obs, magnitude=1.0):
     elif command == "move left":
         start = time.time()
         while (time.time() - start < 1):
-            action[1] = move_step * magnitude
+            action[1] = -move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move right":
         start = time.time()
         while time.time() - start < 1:
-            action[1] = -move_step * magnitude
+            action[1] = move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
@@ -126,7 +127,7 @@ def execute_command(command, obs, magnitude=1.0):
             action = policy.get_action(obs)
             obs, reward, done, info = env.step(action)
             env.render()
-            if done:
+            if reward:
                 print("Stacking completed or episode terminated!")
                 env.reset()
                 return obs, False
