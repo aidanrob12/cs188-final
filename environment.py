@@ -34,42 +34,42 @@ def execute_command(command, obs, magnitude=1.0):
         
     elif command == "move left":
         start = time.time()
-        while (time.time() - start < 3):
+        while (time.time() - start < 1):
             action[1] = move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move right":
         start = time.time()
-        while time.time() - start < 3:
+        while time.time() - start < 1:
             action[1] = -move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move forward":
         start = time.time()
-        while time.time() - start < 3:
+        while time.time() - start < 1:
             action[0] = move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move back":
         start = time.time()
-        while time.time() - start < 3:
+        while time.time() - start < 1:
             action[0] = -move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move up":
         start = time.time()
-        while time.time() - start < 3:
+        while time.time() - start < 1:
             action[2] = move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
             
     elif command == "move down":
         start = time.time()
-        while time.time() - start < 3:
+        while time.time() - start < 1:
             action[2] = -move_step * magnitude
             obs, reward, done, info = env.step(action)
             env.render()
