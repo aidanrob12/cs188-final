@@ -93,6 +93,7 @@ def execute_command(command, obs, magnitude=1.0):
         print("RESETTING ENVIRONMENT")
         obs = env.reset()
         policy = None
+        return obs, False
         prev_policy = None
         
     elif command == "lift green":
@@ -140,7 +141,6 @@ def execute_command(command, obs, magnitude=1.0):
         print("Stacking completed or episode terminated!")
         env.reset()
         return obs, False
-        
     return obs, False
 
 
